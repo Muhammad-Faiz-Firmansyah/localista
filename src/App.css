@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem 2rem 2rem; /* remove top padding so navbar touches the top */
   text-align: center;
 }
 
@@ -39,4 +39,83 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* ===== Navbar styles (semantic, no div) ===== */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: #0f172a; /* slate-900 */
+  color: #fff;
+  border-radius: 12px;
+}
+
+.brand {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.nav-list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: auto; /* push to the right */
+}
+
+.nav-list a {
+  color: #cbd5e1; /* slate-300 */
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.nav-list a:hover,
+.nav-list a:focus {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  outline: none;
+}
+
+.nav-toggle {
+  display: none; /* hidden on large screens */
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .nav-list {
+    position: absolute;
+    top: 56px;
+    right: 1rem;
+    background: #0b1220; /* darker */
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    display: none;
+    min-width: 180px;
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.5);
+  }
+  .nav-list.open {
+    display: flex;
+  }
+  .nav-list a {
+    padding: 0.5rem 0.75rem;
+  }
+  .nav-toggle {
+    display: inline-block;
+  }
+  .brand {
+    margin-right: 0.25rem;
+  }
 }

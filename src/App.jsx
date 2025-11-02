@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.jsx
+import Navbar from "./Navbar";
+import Header from "./Header";
+import Home from "./Home";
 
-function App() {
-  const [ ] = useState(0)
-
+export default function App() {
   return (
     <>
-
+      <Navbar />
+      {/* offset sesuai tinggi navbar: 96px di semua breakpoint */}
+      <main className="pt-[96px]">
+        <Header />
+        <Home />
+      </main>
     </>
-  )
+  );
 }
-
-export default App
