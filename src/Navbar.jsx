@@ -1,5 +1,8 @@
 // Minimalist Navbar: brand + centered search + mobile hamburger
 import { useEffect, useRef, useState } from "react";
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+</style>
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -64,11 +67,11 @@ export default function Navbar() {
       aria-label="Main navigation"
     >
       {/* 3-column grid ensures the center stays centered */}
-  <div className="mx-auto grid h-[96px] w-full max-w-screen-xl grid-cols-3 items-center gap-3 px-4 md:px-6">
+  <div className="mx-auto grid h-24 w-full max-w-7-xl grid-cols-3 items-center gap-3 px-4 md:px-6">
         {/* Left: brand */}
         <a
           href="/"
-          className="justify-self-start shrink-0 no-underline text-white font-semibold text-[18px] md:text-[20px] tracking-[-0.01em] leading-none"
+          className="justify-self-start shrink-0 no-underline text-white font-bold text-[18px] md:text-[20px] tracking-[-0.01em] leading-none font-montserrat"
         >
           Localista
         </a>
@@ -79,6 +82,7 @@ export default function Navbar() {
           action="#"
           onSubmit={onSubmit}
           className="col-start-2 col-end-3 flex justify-center"
+          // placeholder="Cari..."
         >
           <label htmlFor="q" className="sr-only">
             Cari
@@ -111,7 +115,7 @@ export default function Navbar() {
               autoCorrect="off"
               enterKeyHint="search"
               style={{ backgroundColor: '#FFFFFF', border: 'none' }}
-              className="h-[44px] w-full rounded-full pl-12 pr-5 text-sm text-slate-900 placeholder-slate-500 outline-none shadow-md focus:shadow-lg focus:outline-none transition-shadow"
+              className="h-11 w-full rounded-full pl-12 pr-5 text-sm text-slate-900 placeholder-slate-500 outline-none shadow-md focus:shadow-lg focus:outline-none transition-shadow"
             />
           </span>
         </form>
@@ -159,7 +163,7 @@ export default function Navbar() {
       {menuOpen && (
         <ul
           id="mobile-menu"
-          className="md:hidden absolute inset-x-0 top-[96px] z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm"
+          className="md:hidden absolute inset-x-0 top-24 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm"
           role="menu"
         >
           <li role="none">
