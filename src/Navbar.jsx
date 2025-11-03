@@ -1,8 +1,5 @@
 // Minimalist Navbar: brand + centered search + mobile hamburger
 import { useEffect, useRef, useState } from "react";
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-</style>
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -63,7 +60,7 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="sticky top-0 z-50 w-full bg-[#5DADE2] text-white"
+      className="sticky top-0 z-50 w-full bg-[#5DADE2] text-white "
       aria-label="Main navigation"
     >
       {/* 3-column grid ensures the center stays centered */}
@@ -82,7 +79,6 @@ export default function Navbar() {
           action="#"
           onSubmit={onSubmit}
           className="col-start-2 col-end-3 flex justify-center"
-          // placeholder="Cari..."
         >
           <label htmlFor="q" className="sr-only">
             Cari
@@ -166,7 +162,7 @@ export default function Navbar() {
           className="md:hidden absolute inset-x-0 top-24 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm"
           role="menu"
         >
-          <li role="none">
+          <li role="">
             <a href="#" role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-3 text-slate-700 hover:bg-slate-50 no-underline">
               Home
             </a>
