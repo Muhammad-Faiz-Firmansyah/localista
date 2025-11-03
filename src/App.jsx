@@ -7,8 +7,8 @@ export default function App() {
   return (
     <>
       <Navbar />
-      {/* offset sesuai tinggi navbar: 96px di semua breakpoint */}
-      <main className="pt-24">
+      {/* sticky navbar tidak butuh offset; hapus padding-top agar tidak ada jarak putih */}
+      <main className="pt-0">
         <Header />
         <Home />
       </main>

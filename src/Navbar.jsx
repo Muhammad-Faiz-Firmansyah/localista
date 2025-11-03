@@ -67,7 +67,7 @@ export default function Navbar() {
       aria-label="Main navigation"
     >
       {/* 3-column grid ensures the center stays centered */}
-  <div className="mx-auto grid h-24 w-full max-w-7-xl grid-cols-3 items-center gap-3 px-4 md:px-6">
+  <div className="mx-auto grid h-24 w-full max-w-7xl grid-cols-3 items-center gap-3 px-4 md:px-6">
         {/* Left: brand */}
         <a
           href="/"

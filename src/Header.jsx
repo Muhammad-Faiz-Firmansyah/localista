@@ -1,5 +1,6 @@
 // Hero Header with full-bleed image and floating category bar
 import { useState } from "react";
+import Parallax from "./assets/Parallax.png";
 
 export default function Header() {
   const categories = [
@@ -16,33 +17,37 @@ export default function Header() {
   return (
     <header className="relative">
       {/* Full-bleed hero image */}
-      <div className="relative w-full">
+  <div className="relative z-0 w-full">
         <img
-          // src="https://reformedfilmlab.com/cdn/shop/articles/Street_Photography.jpg?v=1642503461" <-- Foto -->
+          src={Parallax}
           alt="Keramaian kota"
-          className="h-[220px] sm:h-[260px] md:h-80 w-full object-cover"
+          className="h-[220px] sm:h-[260px] md:h-[320px] w-full object-cover"
         />
-        <div className="pointer-events-none absolute inset-0 bg-black/0" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 to-transparent" />
       </div>
 
       {/* Floating category bar */}
-      <div className="mx-auto max-w-7x1 px-4 md:px-6">
-        <div className="-mt-5 flex justify-center">
+      <div className="mx-auto max-w-screen-xl px-4 md:px-6">
+        <div className="-mt-6 sm:-mt-8 relative z-10 flex justify-center">
           <nav aria-label="Kategori" className="w-full">
-            <ul className="mx-auto flex w-max max-w-full list-none items-center gap-1 overflow-x-auto rounded-full border border-slate-200 bg-white px-2 py-1.5 shadow-md">
+            <ul className="mx-auto flex w-max max-w-full list-none items-center gap-2 overflow-x-auto rounded-full border border-slate-300 bg-white px-3 py-2 shadow-lg">
               {categories.map(({ key, label, icon }) => (
                 <li key={key} className="shrink-0">
                   <button
                     type="button"
                     onClick={() => setActive(key)}
                     className={
-                      "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-colors " +
+                      "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors border " +
                       (active === key
-                        ? "bg-rose-500 text-white"
-                        : "text-slate-700 hover:bg-slate-50")
+                        ? "border-rose-300 bg-rose-100 text-rose-700"
+                        : "border-transparent text-slate-700 hover:bg-slate-50")
                     }
                   >
-                    {icon({ className: active === key ? "text-white" : "text-slate-500" })}
+                    {/* Active: show dot indicator AND the category icon; Inactive: just icon */}
+                    {active === key && (
+                      <DotIndicator className="mr-1 h-[18px] w-[18px] text-rose-500" />
+                    )}
+                    {icon({ className: active === key ? "text-rose-600" : "text-slate-500" })}
                     {label}
                   </button>
                 </li>
@@ -107,6 +112,22 @@ function GroceryIcon({ className = "" }) {
       <path d="M6 6h15l-1.5 9H8L6 6z" />
       <circle cx="9" cy="20" r="1.5" />
       <circle cx="18" cy="20" r="1.5" />
+    </svg>
+  );
+}
+
+function DotIndicator({ className = "" }) {
+  return (
+    <svg
+      className={"shrink-0 " + className}
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      aria-hidden="true"
+    >
+      <circle cx="10" cy="10" r="8" />
+      <circle cx="10" cy="10" r="4" fill="currentColor" stroke="none" />
     </svg>
   );
 }
