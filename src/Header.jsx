@@ -19,16 +19,27 @@ export default function Header() {
       {/* Full-bleed hero image */}
   <div className="relative z-0 w-full">
         <img
+<<<<<<< HEAD
           src={Parallax}
           alt="Keramaian kota"
           className="h-[220px] sm:h-[260px] md:h-[320px] w-full object-cover"
+=======
+          src="https://reformedfilmlab.com/cdn/shop/articles/Street_Photography.jpg?v=1642503461"  
+          alt="Keramaian kota"
+          className="h-[220px] h-260px sm:h-[260px] md:h-80 w-full object-cover -mt-25"
+>>>>>>> 9149ab9205df0e4965c24115ae5c10d2d3e082d1
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 to-transparent" />
       </div>
 
       {/* Floating category bar */}
+<<<<<<< HEAD
       <div className="mx-auto max-w-screen-xl px-4 md:px-6">
         <div className="-mt-6 sm:-mt-8 relative z-10 flex justify-center">
+=======
+      <div className="mx-auto max-w-7x1 px-4 md:px-6 z-10 m-7 relative">
+        <div className="-mt-5 hidden md:flex md:justify-center">
+>>>>>>> 9149ab9205df0e4965c24115ae5c10d2d3e082d1
           <nav aria-label="Kategori" className="w-full">
             <ul className="mx-auto flex w-max max-w-full list-none items-center gap-2 overflow-x-auto rounded-full border border-slate-300 bg-white px-3 py-2 shadow-lg">
               {categories.map(({ key, label, icon }) => (
