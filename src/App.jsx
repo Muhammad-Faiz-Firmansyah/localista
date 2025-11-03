@@ -8,7 +8,7 @@ export default function App() {
     <>
       <Navbar />
       {/* offset sesuai tinggi navbar: 96px di semua breakpoint */}
-      <main className="pt-[96px]">
+      <main className="pt-24">
         <Header />
         <Home />
       </main>
