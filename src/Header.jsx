@@ -18,16 +18,16 @@ export default function Header() {
       {/* Full-bleed hero image */}
       <div className="relative w-full">
         <img
-          // src="https://reformedfilmlab.com/cdn/shop/articles/Street_Photography.jpg?v=1642503461" <-- Foto -->
+          src="https://reformedfilmlab.com/cdn/shop/articles/Street_Photography.jpg?v=1642503461"  
           alt="Keramaian kota"
-          className="h-[220px] sm:h-[260px] md:h-80 w-full object-cover"
+          className="h-[220px] h-260px sm:h-[260px] md:h-80 w-full object-cover -mt-25"
         />
         <div className="pointer-events-none absolute inset-0 bg-black/0" />
       </div>
 
       {/* Floating category bar */}
       <div className="mx-auto max-w-7x1 px-4 md:px-6">
-        <div className="-mt-5 flex justify-center">
+        <div className="-mt-5 hidden md:flex md:justify-center">
           <nav aria-label="Kategori" className="w-full">
             <ul className="mx-auto flex w-max max-w-full list-none items-center gap-1 overflow-x-auto rounded-full border border-slate-200 bg-white px-2 py-1.5 shadow-md">
               {categories.map(({ key, label, icon }) => (
