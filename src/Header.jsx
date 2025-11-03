@@ -26,7 +26,7 @@ export default function Header() {
       </div>
 
       {/* Floating category bar */}
-      <div className="mx-auto max-w-7x1 px-4 md:px-6">
+      <div className="mx-auto max-w-7x1 px-4 md:px-6 z-10 m-7 relative">
         <div className="-mt-5 hidden md:flex md:justify-center">
           <nav aria-label="Kategori" className="w-full">
             <ul className="mx-auto flex w-max max-w-full list-none items-center gap-1 overflow-x-auto rounded-full border border-slate-200 bg-white px-2 py-1.5 shadow-md">
