@@ -21,13 +21,13 @@ export default function Header() {
         <img
           src={Parallax}
           alt="Keramaian kota"
-          className="h-[220px] sm:h-[260px] md:h-[320px] w-full object-cover"
+          className="h-[220px] sm:h-[260px] md:h-80 w-full object-cover"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/10 to-transparent" />
       </div>
 
       {/* Floating category bar */}
-    <div className="mx-auto max-w-screen-xl px-4 md:px-6 z-10 m-7 relative">
+    <div className="mx-auto max-w-7xl px-4 md:px-6 z-10 m-7 relative">
         <div className="-mt-5 hidden md:flex md:justify-center">
           <nav aria-label="Kategori" className="w-full">
             <ul className="mx-auto flex w-max max-w-full list-none items-center gap-2 overflow-x-auto rounded-full border border-slate-300 bg-white px-3 py-2 shadow-lg">
