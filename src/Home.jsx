@@ -24,13 +24,28 @@ function StarRating({ rating = 4 }) {
   );
 }
 
-function ItemCard() {
+function openDetail(section, id) {
+  window.dispatchEvent(new CustomEvent("app:open-detail", { detail: { section, id } }));
+  console.log("open detail", { section, id });
+}
+
+function ItemCard({ section, id }) {
   return (
     <li className="flex flex-col gap-2">
       <div className="h-24 rounded-lg bg-slate-200" />
-      <div className="space-y-1">
+      <div className="space-y-2">
         <p className="text-sm text-slate-700">Nama Tempat</p>
         <StarRating rating={4} />
+        <div>
+          <button
+            type="button"
+            onClick={() => openDetail(section, id)}
+            className="inline-flex items-center rounded-full border border-slate-300 px-3 py-1 text-xs text-slate-700 hover:bg-slate-50 active:bg-slate-100"
+            aria-label={`Detail untuk item ${id} di ${section}`}
+          >
+            Detail
+          </button>
+        </div>
       </div>
     </li>
   );
@@ -41,10 +56,9 @@ function SectionPanel({ title }) {
     <section className="rounded-2xl border border-slate-200 bg-white p-4 md:p-5 shadow-sm">
       <h3 className="mb-4 text-lg font-medium text-slate-800">{title}</h3>
       <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        {[1,2,3,4].map((id) => (
+          <ItemCard key={id} section={title} id={id} />
+        ))}
       </ul>
     </section>
   );
