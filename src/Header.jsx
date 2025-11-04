@@ -113,4 +113,3 @@ function GroceryIcon({ className = "" }) {
   );
 }
 
-// (Dot indicator removed to follow Figma spec)
