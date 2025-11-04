@@ -27,7 +27,7 @@ export default function Header() {
       </div>
 
       {/* Floating category bar */}
-      <div className="mx-auto max-w-7x1 px-4 md:px-6 z-10 m-7 relative">
+    <div className="mx-auto max-w-screen-xl px-4 md:px-6 z-10 m-7 relative">
         <div className="-mt-5 hidden md:flex md:justify-center">
           <nav aria-label="Kategori" className="w-full">
             <ul className="mx-auto flex w-max max-w-full list-none items-center gap-2 overflow-x-auto rounded-full border border-slate-300 bg-white px-3 py-2 shadow-lg">
@@ -43,10 +43,7 @@ export default function Header() {
                         : "border-transparent text-slate-700 hover:bg-slate-50")
                     }
                   >
-                    {/* Active: show dot indicator AND the category icon; Inactive: just icon */}
-                    {active === key && (
-                      <DotIndicator className="mr-1 h-[18px] w-[18px] text-rose-500" />
-                    )}
+                    {/* Tampilkan ikon kategori saja (tanpa dot), sesuai Figma */}
                     {icon({ className: active === key ? "text-rose-600" : "text-slate-500" })}
                     {label}
                   </button>
@@ -116,18 +113,4 @@ function GroceryIcon({ className = "" }) {
   );
 }
 
-function DotIndicator({ className = "" }) {
-  return (
-    <svg
-      className={"shrink-0 " + className}
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      aria-hidden="true"
-    >
-      <circle cx="10" cy="10" r="8" />
-      <circle cx="10" cy="10" r="4" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
+// (Dot indicator removed to follow Figma spec)
