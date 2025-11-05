@@ -1,6 +1,5 @@
 // Home sections: Makanan, Minuman, Jasa, Fashion, Sembako
 // Simple placeholder cards to match the Figma structure
-
 function Star({ filled }) {
   return (
     <svg
@@ -66,7 +65,7 @@ function SectionPanel({ title }) {
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-screen-xl px-4 md:px-6 pb-16 space-y-6 md:space-y-8">
+    <div className="mx-auto max-w-7xl px-4 md:px-6 pb-16 space-y-6 md:space-y-8">
       <SectionPanel title="Makanan" />
       <SectionPanel title="Minuman" />
       <SectionPanel title="Jasa" />
