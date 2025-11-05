@@ -15,9 +15,6 @@ export default function Footer() {
           Localista
         </div>
       </div>  
-      <div className="relative text-sm md:text-base text-slate-700 px-4 md:px-6 bg-amber-50 py-4 rounded-md mt-auto">
-      a
-      </div>
     </footer>
   );
 }
