@@ -1,5 +1,6 @@
 // Minimalist Navbar: brand + centered search + mobile hamburger
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -66,12 +67,12 @@ export default function Navbar() {
       {/* 3-column grid ensures the center stays centered */}
   <div className="mx-auto grid h-24 w-full max-w-7xl grid-cols-3 items-center gap-3 px-4 md:px-6">
         {/* Left: brand */}
-        <a
-          href="/"
+        <Link
+          to="/"
           className="justify-self-start shrink-0 no-underline text-white font-bold text-[18px] md:text-[20px] tracking-[-0.01em] leading-none font-montserrat"
         >
           Localista
-        </a>
+        </Link>
 
         {/* Center: search */}
         <form
@@ -162,10 +163,10 @@ export default function Navbar() {
           className="md:hidden absolute inset-x-0 top-24 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm"
           role="menu"
         >
-          <li role="">
-            <a href="#" role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-3 text-slate-700 hover:bg-slate-50 no-underline">
+          <li role="none">
+            <Link to="/" role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-3 text-slate-700 hover:bg-slate-50 no-underline">
               Home
-            </a>
+            </Link>
           </li>
           <li role="none">
             <a href="#" role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-3 text-slate-700 hover:bg-slate-50 no-underline">

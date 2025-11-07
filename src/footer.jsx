@@ -1,20 +1,26 @@
-import {} from 'react';
 import Parallax from "./assets/Parallax.png";
 
 export default function Footer() {
   return (
-    <footer className="relative md:py-50 mt-10 border-t border-slate-200 pt-20 flex flex-col">
-      <div className="absolute inset-0" style={{ backgroundImage: `url(${Parallax})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.25, filter: 'grayscale(100%)' }}></div>
-      <div className="relative flex items-center px-4 md:px-6 ">
-
-        <div className="w-20 h-20 bg-white flex items-center justify-center text-black font-bold rounded-md">
-        Logo
+    <footer className="relative mt-10 border-t border-slate-200 py-8 md:py-10">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${Parallax})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.25,
+          filter: "grayscale(100%)",
+        }}
+      />
+      <div className="relative flex items-center px-4 md:px-6 py-2">
+        <div className="w-14 h-14 md:w-16 md:h-16 bg-white flex items-center justify-center text-black font-bold rounded-md shadow-sm">
+          Logo
         </div>
-
-        <div className="bg-amber-50 text-xl md:text-2xl font-montserrat font-bold text-black ml-auto">
+        <div className="ml-auto text-xl md:text-2xl font-montserrat font-bold text-black">
           Localista
         </div>
-      </div>  
+      </div>
     </footer>
   );
 }

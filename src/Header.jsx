@@ -13,6 +13,14 @@ export default function Header() {
   ];
 
   const [active, setActive] = useState("reco");
+  const sectionId = {
+    reco: "rekomendasi",
+    food: "makanan",
+    drink: "minuman",
+    service: "jasa",
+    fashion: "fashion",
+    grocery: "sembako",
+  };
 
   return (
     <header className="relative">
@@ -23,7 +31,7 @@ export default function Header() {
           alt="Keramaian kota"
           className="h-[220px] sm:h-[260px] md:h-80 w-full object-cover"
         />
-        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/10 to-transparent" />
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 to-transparent" />
       </div>
 
       {/* Floating category bar */}
@@ -35,7 +43,16 @@ export default function Header() {
                 <li key={key} className="shrink-0">
                   <button
                     type="button"
-                    onClick={() => setActive(key)}
+                    onClick={() => {
+                      setActive(key);
+                      const id = sectionId[key];
+                      if (id) {
+                        const el = document.getElementById(id);
+                        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }
+                    }}
+                    aria-pressed={active === key}
+                    aria-current={active === key ? "true" : undefined}
                     className={
                       "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors border " +
                       (active === key
