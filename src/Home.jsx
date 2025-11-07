@@ -24,14 +24,15 @@ function StarRating({ rating = 4 }) {
 }
 
 import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
-function ItemCard({ section, id }) {
+function ItemCard({ section, id, name = "Nama Tempat", rating = 4 }) {
   return (
     <li className="group flex flex-col gap-2 animate-[fade-up_0.5s_ease-out_both]" style={{ animationDelay: `${id * 60}ms` }}>
       <div className="h-24 rounded-lg bg-slate-200 transition-all duration-200 group-hover:shadow-md group-hover:scale-[1.02]" />
       <div className="space-y-2">
-        <p className="text-sm text-slate-700">Nama Tempat</p>
-        <StarRating rating={4} />
+        <p className="text-sm text-slate-700">{name}</p>
+        <StarRating rating={rating} />
         <div>
           <Link
             to={`/umkm/${String(section).toLowerCase()}/${id}`}
@@ -57,13 +58,14 @@ function ItemCard({ section, id }) {
   );
 }
 
-function SectionPanel({ id, title }) {
+function SectionPanel({ id, title, items }) {
   return (
     <section id={id} className="scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-4 md:p-5 shadow-sm animate-[fade-up_0.5s_ease-out_both]">
       <h3 className="mb-4 text-lg font-medium text-slate-800">{title}</h3>
       <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-        {[1,2,3,4].map((id) => (
-          <ItemCard key={id} section={title} id={id} />
+        {items.map((item, idx) => (
+          <ItemCard key={item.id || idx} section={(item.section || title)} id={item.id || idx} name={item.name} rating={item.rating}
+          />
         ))}
       </ul>
     </section>
@@ -71,15 +73,57 @@ function SectionPanel({ id, title }) {
 }
 
 export default function Home() {
+  const [data, setData] = useState({ rekomendasi: [], makanan: [], minuman: [], jasa: [], fashion: [], sembako: [] });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        setLoading(true);
+        const base = 'http://localhost:4000/api/umkm';
+        const sections = ['rekomendasi','makanan','minuman','jasa','fashion','sembako'];
+        const results = await Promise.all(sections.map(async (s) => {
+          const url = s === 'rekomendasi' ? `${base}?section=rekomendasi&limit=4` : `${base}?section=${s}&limit=4`;
+          const res = await fetch(url);
+          if (!res.ok) throw new Error('Gagal fetch ' + s);
+          return res.json();
+        }));
+        if (!cancelled) {
+          setData({
+            rekomendasi: results[0],
+            makanan: results[1],
+            minuman: results[2],
+            jasa: results[3],
+            fashion: results[4],
+            sembako: results[5],
+          });
+        }
+      } catch (e) {
+        if (!cancelled) setError(e.message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 pb-16 space-y-6 md:space-y-8">
-      {/* Rekomendasi section to match Header chips and anchor */}
-      <SectionPanel id="rekomendasi" title="Rekomendasi" />
-      <SectionPanel id="makanan" title="Makanan" />
-      <SectionPanel id="minuman" title="Minuman" />
-      <SectionPanel id="jasa" title="Jasa" />
-      <SectionPanel id="fashion" title="Fashion" />
-      <SectionPanel id="sembako" title="Sembako" />
+      {error && <div className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
+      {loading && <div className="text-sm text-slate-500">Memuat data UMKM...</div>}
+      {!loading && (
+        <>
+          <SectionPanel id="rekomendasi" title="Rekomendasi" items={data.rekomendasi} />
+          <SectionPanel id="makanan" title="Makanan" items={data.makanan} />
+          <SectionPanel id="minuman" title="Minuman" items={data.minuman} />
+          <SectionPanel id="jasa" title="Jasa" items={data.jasa} />
+          <SectionPanel id="fashion" title="Fashion" items={data.fashion} />
+          <SectionPanel id="sembako" title="Sembako" items={data.sembako} />
+        </>
+      )}
     </div>
   );
 }

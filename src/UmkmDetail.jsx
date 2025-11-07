@@ -46,30 +46,42 @@ function ProductCard({ product, index }) {
 
 export default function UmkmDetail() {
   const { section, id } = useParams();
-  const categories = ["Minuman", "Makanan", "Snack"];
-  const [active, setActive] = useState(categories[0]);
+  const [detail, setDetail] = useState(null);
+  const [active, setActive] = useState('Minuman');
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Sinkronkan kategori aktif dengan parameter URL (section)
   useEffect(() => {
-    const map = { minuman: "Minuman", makanan: "Makanan", snack: "Snack", rekomendasi: "Minuman" };
-    const next = map[String(section).toLowerCase()];
-    if (next && next !== active) setActive(next);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [section]);
+    let cancelled = false;
+    async function load() {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch(`http://localhost:4000/api/umkm/${id}`);
+        if (!res.ok) throw new Error('Gagal memuat detail');
+        const data = await res.json();
+        if (cancelled) return;
+        setDetail(data);
+        const urlMap = { minuman: 'Minuman', makanan: 'Makanan', snack: 'Snack', rekomendasi: 'Minuman' };
+        const fromUrl = urlMap[String(section).toLowerCase()];
+        if (fromUrl) setActive(fromUrl);
+        else {
+          const keys = Object.keys(data.products || {});
+          const firstWithItems = keys.find(k => (data.products?.[k] || []).length > 0);
+          if (firstWithItems) setActive(firstWithItems);
+        }
+      } catch (e) {
+        if (!cancelled) setError(e.message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, [id, section]);
 
-  const products = useMemo(() => {
-    const gen = (n) => Array.from({ length: n }, (_, i) => ({
-      id: i + 1,
-      name: `${active} Item ${i + 1}`,
-      price: 10000 + i * 1000,
-      img: Parallax,
-    }));
-    return {
-      Minuman: gen(8),
-      Makanan: gen(8),
-      Snack: gen(8),
-    };
-  }, [active]);
+  const categories = useMemo(() => detail ? Object.keys(detail.products || {}) : ["Minuman","Makanan","Snack"], [detail]);
+  const products = useMemo(() => detail?.products || {}, [detail]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 pb-16">
@@ -91,12 +103,12 @@ export default function UmkmDetail() {
             <div className="flex items-start gap-3">
               <div className="h-14 w-14 rounded-md bg-slate-200 shrink-0" />
               <div className="flex-1">
-                <h1 className="text-lg md:text-xl font-semibold text-slate-900 leading-tight uppercase tracking-wide">KOPI KOLU</h1>
+                <h1 className="text-lg md:text-xl font-semibold text-slate-900 leading-tight uppercase tracking-wide">{detail?.name || 'NAMA UMKM'}</h1>
                 <div className="flex items-center gap-2">
-                  <StarRating rating={4} />
-                  <span className="text-xs text-slate-500">(4.0)</span>
+                  <StarRating rating={Math.round(detail?.rating || 0)} />
+                  {detail?.rating !== undefined && <span className="text-xs text-slate-500">({detail.rating.toFixed(1)})</span>}
                 </div>
-                <p className="text-xs md:text-sm text-slate-600">Alamat singkat, Kota, Provinsi</p>
+                <p className="text-xs md:text-sm text-slate-600">{detail?.address || 'Alamat singkat, Kota, Provinsi'}</p>
               </div>
             </div>
           </div>
@@ -144,15 +156,17 @@ export default function UmkmDetail() {
           <div className="text-xs text-slate-500">Kategori aktif: <span className="capitalize">{active}</span></div>
         </div>
 
-        {products[active] && products[active].length > 0 ? (
+        {error && <p className="text-sm text-red-600">{error}</p>}
+        {loading && <p className="text-sm text-slate-500">Memuat detail...</p>}
+        {!loading && !error && products[active] && products[active].length > 0 ? (
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
             {products[active].map((p, i) => (
               <ProductCard key={p.id} product={p} index={i} />
             ))}
           </ul>
-        ) : (
+        ) : (!loading && !error) ? (
           <p className="text-sm text-slate-600">Belum ada produk pada kategori ini.</p>
-        )}
+        ) : null}
       </section>
     </div>
   );
