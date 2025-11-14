@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 // Replace static data with SQLite queries
-import { findUmkm, getUmkmById } from './db.js';
+// Use JSON store to avoid native dependencies
+import { findUmkm, getUmkmById } from './store.js';
 
 const app = express();
 app.use(cors());
