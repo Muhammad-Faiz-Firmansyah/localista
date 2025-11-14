@@ -4,6 +4,7 @@ import Parallax from "./assets/Parallax.png";
 
 export default function Header() {
   const categories = [
+    { key: "all", label: "Semua", icon: AllIcon },
     { key: "reco", label: "Rekomendasi", icon: RecoIcon },
     { key: "food", label: "Makanan", icon: FoodIcon },
     { key: "drink", label: "Minuman", icon: DrinkIcon },
@@ -14,6 +15,7 @@ export default function Header() {
 
   const [active, setActive] = useState("reco");
   const sectionId = {
+    all: "all",
     reco: "rekomendasi",
     food: "makanan",
     drink: "minuman",
@@ -46,9 +48,9 @@ export default function Header() {
                     onClick={() => {
                       setActive(key);
                       const id = sectionId[key];
+                      // Broadcast selection so Home can filter sections WITHOUT scrolling
                       if (id) {
-                        const el = document.getElementById(id);
-                        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                        window.dispatchEvent(new CustomEvent("app:section-selected", { detail: { id } }));
                       }
                     }}
                     aria-pressed={active === key}
@@ -74,6 +76,17 @@ export default function Header() {
         <h2 className="mt-8 text-xl font-semibold text-slate-900">Rekomendasi</h2>
       </div>
     </header>
+  );
+}
+
+function AllIcon({ className = "" }) {
+  return (
+    <svg className={"h-4 w-4 " + className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="3" width="7" height="7" />
+      <rect x="14" y="3" width="7" height="7" />
+      <rect x="3" y="14" width="7" height="7" />
+      <rect x="14" y="14" width="7" height="7" />
+    </svg>
   );
 }
 

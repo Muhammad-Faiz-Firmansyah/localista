@@ -76,6 +76,7 @@ export default function Home() {
   const [data, setData] = useState({ rekomendasi: [], makanan: [], minuman: [], jasa: [], fashion: [], sembako: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedSection, setSelectedSection] = useState('rekomendasi');
 
   useEffect(() => {
     let cancelled = false;
@@ -110,18 +111,33 @@ export default function Home() {
     return () => { cancelled = true; };
   }, []);
 
+  // Listen to category selection from Header
+  useEffect(() => {
+    const onSelect = (e) => {
+      const id = e.detail?.id;
+      if (!id) return;
+      if (id === 'all') {
+        setSelectedSection('all');
+      } else {
+        setSelectedSection(id);
+      }
+    };
+    window.addEventListener('app:section-selected', onSelect);
+    return () => window.removeEventListener('app:section-selected', onSelect);
+  }, []);
+
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 pb-16 space-y-6 md:space-y-8">
       {error && <div className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
       {loading && <div className="text-sm text-slate-500">Memuat data UMKM...</div>}
       {!loading && (
         <>
-          <SectionPanel id="rekomendasi" title="Rekomendasi" items={data.rekomendasi} />
-          <SectionPanel id="makanan" title="Makanan" items={data.makanan} />
-          <SectionPanel id="minuman" title="Minuman" items={data.minuman} />
-          <SectionPanel id="jasa" title="Jasa" items={data.jasa} />
-          <SectionPanel id="fashion" title="Fashion" items={data.fashion} />
-          <SectionPanel id="sembako" title="Sembako" items={data.sembako} />
+          {(selectedSection === 'all' || selectedSection === 'rekomendasi') && <SectionPanel id="rekomendasi" title="Rekomendasi" items={data.rekomendasi} />}
+          {(selectedSection === 'all' || selectedSection === 'makanan') && <SectionPanel id="makanan" title="Makanan" items={data.makanan} />}
+          {(selectedSection === 'all' || selectedSection === 'minuman') && <SectionPanel id="minuman" title="Minuman" items={data.minuman} />}
+          {(selectedSection === 'all' || selectedSection === 'jasa') && <SectionPanel id="jasa" title="Jasa" items={data.jasa} />}
+          {(selectedSection === 'all' || selectedSection === 'fashion') && <SectionPanel id="fashion" title="Fashion" items={data.fashion} />}
+          {(selectedSection === 'all' || selectedSection === 'sembako') && <SectionPanel id="sembako" title="Sembako" items={data.sembako} />}
         </>
       )}
     </div>

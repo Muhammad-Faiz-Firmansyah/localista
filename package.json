@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "localista",
   "private": true,
   "version": "0.0.0",
@@ -12,7 +13,8 @@
     "server:dev": "npm --prefix server run dev",
     "dev:all": "concurrently -k -n web,api -c blue,magenta \"vite\" \"npm --prefix server run dev\"",
     "start": "npm run dev:all",
-    "postinstall": "npm --prefix server install"
+    "postinstall": "npm --prefix server install",
+    "seed": "node server/seed.js"
   },
   "dependencies": {
     "react": "^19.1.1",

@@ -1,14 +1,17 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "localista-backend",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node --watch index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "seed": "node seed.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "better-sqlite3": "^9.1.1"
   }
 }

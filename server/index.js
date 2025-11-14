@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import umkm from './data/umkm.js';
+// Replace static data with SQLite queries
+import { findUmkm, getUmkmById } from './db.js';
 
 const app = express();
 app.use(cors());
@@ -16,29 +17,29 @@ app.get('/api/health', (_req, res) => {
 // List UMKM with optional filters: section, q, limit
 app.get('/api/umkm', (req, res) => {
   const { section, q, limit } = req.query;
-  let items = [...umkm];
-  if (section) {
-    const s = String(section).toLowerCase();
-    if (s === 'rekomendasi') {
-      items = items.filter((i) => i.recommended);
-    } else {
-      items = items.filter((i) => i.section.toLowerCase() === s);
-    }
+  try {
+    const items = findUmkm({
+      section: section && section !== 'rekomendasi' ? section : undefined,
+      recommended: section === 'rekomendasi',
+      q,
+      limit: limit ? Number(limit) : undefined,
+    });
+    res.json(items);
+  } catch (e) {
+    res.status(500).json({ error: 'Query error', detail: e.message });
   }
-  if (q) {
-    const term = String(q).toLowerCase();
-    items = items.filter((i) => i.name.toLowerCase().includes(term));
-  }
-  const n = Number(limit) || items.length;
-  res.json(items.slice(0, n));
 });
 
 // Get UMKM detail by id
 app.get('/api/umkm/:id', (req, res) => {
-  const id = String(req.params.id);
-  const item = umkm.find((i) => String(i.id) === id);
-  if (!item) return res.status(404).json({ error: 'Not found' });
-  res.json(item);
+  try {
+    const id = String(req.params.id);
+    const item = getUmkmById(id);
+    if (!item) return res.status(404).json({ error: 'Not found' });
+    res.json(item);
+  } catch (e) {
+    res.status(500).json({ error: 'Query error', detail: e.message });
+  }
 });
 
 app.listen(PORT, () => {
